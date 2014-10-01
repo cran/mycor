@@ -1,0 +1,11 @@
+mycor 0.1
+=========
+
+* new function "mycor" which automatically perform correlation and linear
+  regression test for a data.frame and return an object of S3 class "mycor"
+
+* new generic function "mycor.formula" makes an object of calss "mycor" from
+  formula
+
+* new function plot.mycor which has four predefine plots based on pairs()
+  and lattice::parallelplot
