@@ -1,5 +1,12 @@
-mycor 0.1
-=========
+mycor 0.1.1
+===========
+(10-Apr-2018)
+
+* Added missing imports and S3 method registration
+
+mycor 0.1.0
+===========
+(1-Oct-2014)
 
 * new function "mycor" which automatically perform correlation and linear
   regression test for a data.frame and return an object of S3 class "mycor"

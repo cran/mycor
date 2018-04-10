@@ -1,8 +1,7 @@
-require(lattice) # for use of parallelplot ;
-
 #' Perform correlation and linear regression for a data.frame automatically
 #'
 #' @param mycor Object to mycor
+#' @export
 mycor=function(x,...,digits) UseMethod("mycor")
 
 #' @describeIn mycor for class data.frame
@@ -10,6 +9,7 @@ mycor=function(x,...,digits) UseMethod("mycor")
 #' @param ... further arguments to be passed to \code{\link{cor.test}}.
 #' @param digits integer indicating the number of decimal places (round) or
 #'     significant digits (signif) to be used.
+#' @export
 #' @return mycor returns as object of class "mycor"
 #'
 #'     The function summary is used to print a summary of the result. The function
@@ -30,16 +30,16 @@ mycor=function(x,...,digits) UseMethod("mycor")
 #'        \item{intercept}{a matrix consist of intercept values from \code{\link{lm}}
 #'           between all pairs of numeric data from a data.frame}
 #'     }
-#'  @examples
-#'  out=mycor(iris)
-#'  plot(out)
-#'  plot(out, groups=Species)
-#'  plot(out,type=2,groups=species)
-#'  plot(out,type=4,groups=species)
-#'  out1=mycor(~mpg+disp+wt+hp,data=mtcars,alternative="greater",methods="kendall",
+#' @examples
+#' out=mycor(iris)
+#' plot(out)
+#' plot(out, groups=Species)
+#' plot(out,type=2,groups=species)
+#' plot(out,type=4,groups=species)
+#' out1=mycor(~mpg+disp+wt+hp,data=mtcars,alternative="greater",methods="kendall",
 #'             conf.level=0.95)
-#'  plot(out1,type=3)
-#'  plot(out1,type=4,groups=cyl)
+#' plot(out1,type=3)
+#' plot(out1,type=4,groups=cyl)
 mycor.default=function(x,...,digits=3){
     # select numeric data ony
     select<-(lapply(x,function(x) is.numeric(x))==TRUE)
@@ -71,6 +71,8 @@ mycor.default=function(x,...,digits=3){
 #'       numeric variables giving the data values for one sample. The samples
 #'       must be of the same length.
 #' @param data A data.frame
+#' @importFrom stats terms
+#' @export
 mycor.formula=function(formula,data,...,digits=3){
     f=formula
     myt=terms(f,data=data)
@@ -88,6 +90,7 @@ mycor.formula=function(formula,data,...,digits=3){
 #' @param ... further arguments to be passed to or from methods.
 #' @param digits integer indicating the number of decimal places (round) or
 #'     significant digits (signif) to be used.
+#' @importFrom stats cor.test lm
 #' @return mylm returns a list of following components
 #'
 #'     \describe{
@@ -117,6 +120,7 @@ mylm=function(y,x,...,digits=3){
 #'
 #' @param object an object of class "mycor", a result of a call to \code{\link{mycor}}.
 #' @param ... further arguments to be passed to or from methods.
+#' @export
 #' @examples
 #' out=mycor(iris)
 #' summary(out)
@@ -136,6 +140,7 @@ summary.mycor=function(object,...){
 #'
 #' @param x an object of class "mycor", a result of a call to \code{\link{mycor}}.
 #' @param ... further arguments to be passed to or from methods.
+#' @export
 #' @examples
 #' out=mycor(iris)
 #' print(out)
@@ -155,16 +160,10 @@ print.mycor=function(x,...) {
 #'      act as a grouping variable within each panel, typically used to
 #'      distinguish different groups by varying graphical parameters like color and line type.
 #' @param type specify the type of plot
-#'    \describe{
-#'       \item{1}{makes plot with \code{\link[graphics]{pairs}}}
-#'       \item{2}{makes plot with \code{\link[graphics]{pairs}} using
-#'             \code{\link{panel.hist}} as a diagonal panel}
-#'       \item{3}{makes plot with \code{\link[graphics]{pairs}} using
-#'             \code{\link{panel.cor}} as a upper panel}
-#'       \item{4}{makes plot with \code{\link[lattice]{parallelplot}} using
-#'             \code{\link{panel.cor}} as a upper panel}
-#'  }
-#'  @examples
+#' @importFrom graphics pairs panel.smooth
+#' @importFrom lattice parallelplot
+#' @export
+#' @examples
 #'  out=mycor(iris)
 #'  plot(out)
 #'  plot(out, groups=Species)
@@ -219,6 +218,7 @@ plot.mycor=function(x,...,groups=-1,type=1) {
 #' Make plot with histogram for plot of class "mycor"
 #' @param x a numeric vector
 #' @param ... further arguments to be passed to or from methods.
+#' @importFrom graphics par hist rect
 panel.hist<-function(x,...){
     usr<-par("usr");on.exit(par(usr))
     par(usr=c(usr[1:2],0,1.5))
@@ -235,6 +235,8 @@ panel.hist<-function(x,...){
 #'     significant digits (signif) to be used.
 #' @param prefix a character vector
 #' @param cex.cor a numeric variable
+#' @importFrom stats cor
+#' @importFrom graphics strwidth text
 panel.cor<-function(x,y,digits=2,prefix="",cex.cor)
 {
     usr<-par("usr");on.exit(par(usr))

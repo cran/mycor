@@ -45,17 +45,17 @@ out1=mycor(~mpg+wt+disp+hp,data=mtcars)
 plot(out,groups=Species)
 ```
 
-![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-11.png) 
+![plot of chunk unnamed-chunk-1](man/figures/unnamed-chunk-11.png) 
 
 ```r
 plot(out,type=4,groups=Spec)
 ```
 
-![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-12.png) 
+![plot of chunk unnamed-chunk-1](man/figures/unnamed-chunk-12.png) 
 
 ```r
 plot(out1,type=2,groups=cyl)
 ```
 
-![plot of chunk unnamed-chunk-1](figure/unnamed-chunk-13.png) 
+![plot of chunk unnamed-chunk-1](man/figures/unnamed-chunk-13.png) 
 
